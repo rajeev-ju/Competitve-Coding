@@ -1,0 +1,29 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+#define LL long long
+bool comp(int a, int b){
+    return b > a;
+}
+int main() {
+	// your code goes here
+	int n, q, arr[200008] = {}, i, j, l, r;
+	LL frequency[200008] = {};
+	LL sum =0;
+	cin >> n >> q;
+	for(i = 1; i <= n; i++)
+	    cin >> arr[i];
+	while(q--){
+	    cin >> l >> r;
+	    frequency[l]++;
+	    frequency[r + 1]--;
+	}
+	for(i = 1; i <= n; i++)
+	    frequency[i] += frequency[i - 1];
+	sort(arr, arr + n + 1, comp);
+	sort(frequency, frequency + n + 1, comp);
+	for(i =1; i <=n; i++)
+	    sum += frequency[i] * arr[i];
+	cout << sum;
+	return 0;
+}
