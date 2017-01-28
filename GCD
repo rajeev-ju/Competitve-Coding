@@ -1,0 +1,24 @@
+#include <iostream>
+using namespace std;
+int GCD(int A, int B){
+    int divisor,rem, dividend;
+    if(A == 0 || B == 0)
+        return A>B? A : B;
+    if(A >= B){
+    divisor = B;
+    dividend = A;
+    rem = dividend % divisor;
+    if(rem == 0)
+        return divisor;
+     gcd(divisor,rem);
+    }
+    else
+        gcd(B,A);
+}
+int main() {
+	// your code goes here
+	int a, b;
+	cin >> a >> b;
+	cout << GCD(a, b);
+	return 0;
+}
