@@ -1,0 +1,40 @@
+Q :Given a column title as appears in an Excel sheet, return its corresponding column number.
+
+      Example:
+
+          A -> 1
+    
+          B -> 2
+    
+          C -> 3
+    
+          ...
+    
+          Z -> 26
+    
+          AA -> 27
+    
+          AB -> 28 
+         
+Ans :
+          #include <iostream>
+          #include <string>
+          #include <cmath>
+          #define LL long long
+          using namespace std;
+
+          LL int solution(string str){
+              LL int i, rank = 0,len;
+              len = str.size();
+              for(i = 0; i < str.size(); ++i){
+                  rank += pow(26,len - i - 1) * (str[i] - 64);
+              }
+          return rank;
+          }
+          
+          int main() {
+	            string str;
+	            cin >> str;
+	            cout << solution(str);
+	        return 0;
+          }
