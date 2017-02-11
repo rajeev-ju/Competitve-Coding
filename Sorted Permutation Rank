@@ -1,0 +1,46 @@
+Q : Given a string, find the rank of the string amongst its permutations sorted lexicographically. 
+    Assume that no characters are repeated.
+    
+Ans :
+      #include <iostream>
+      #include <string>
+      #include <algorithm>
+      #define LL long long 
+      using namespace std;
+      LL int fact(LL int a){
+          LL int temp = a;
+          if(a == 0)
+            return 1;
+          if(a == 1)
+            return temp;
+          return temp * fact(a -1);
+      }
+      LL int permutation_rank(string str, string temp){
+          LL int i,pos = 0, c =0,j;
+          while(1){
+	        for(i = 0; i < str.size(); i++){
+	            for(j = 0; j < str.size() ; j++){
+	                if(str[i] == temp[j]){
+	                    temp[j] = '0';
+	                    c++;
+	                    break;
+	                }
+	                else{
+	                    if(temp[j] != '0')
+	                        pos += fact(str.size() - (i + 1));
+	                }
+	            }
+	            if(c == str.size())
+	                return pos + 1;
+	        }
+	      }
+    }
+    int main() {
+	      string str,temp;
+	      cout << fact(25);
+	      cin >> str;
+	      temp = str;
+	      sort(temp.begin(),temp.end());
+	      cout << permutation_rank(str,temp);
+	   return 0;
+    }
