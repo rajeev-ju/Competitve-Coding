@@ -1,0 +1,69 @@
+Q:
+  Given a roman numeral, convert it to an integer.
+
+  Input is guaranteed to be within the range from 1 to 3999.
+ 
+Ans:
+  int i,sum = 0;
+    char choice;
+    for(int i = a.size() - 1; i >= 0; i--){
+        choice = a[i];
+        switch(choice){
+            case 'I':
+                sum += 1;
+                break;
+            case 'V':
+                if(a[i - 1] == 'I'){
+                    sum += 4;
+                    i--;
+                }
+                else
+                    sum += 5;
+                break;
+            case 'X' :
+                if(a[i - 1] == 'I'){
+                    sum += 9;
+                    i--;
+                }
+                else
+                    sum += 10;
+                break;
+            case 'L' :
+                if(a[i - 1] == 'X'){
+                    sum += 40;
+                    i--;
+                }
+                else
+                    sum += 50;
+                break;
+            case 'C' :
+                if(a[i - 1] == 'X'){
+                    sum += 90;
+                    i--;
+                }
+                else
+                    sum += 100;
+                break;
+            case 'D' :
+                if(a[i - 1] == 'C'){
+                    sum += 400;
+                    i--;
+                }
+                else
+                    sum += 500;
+                break;
+            case 'M' :
+                if(a[i - 1] == 'C'){
+                    sum += 900;
+                    i--;
+                }
+                else
+                    sum += 1000;
+                break;
+            default :
+                cout << "Wrong Input" << endl;
+                break;
+        }
+    }
+    return sum;
+    }
