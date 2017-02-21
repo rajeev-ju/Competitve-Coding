@@ -1,0 +1,102 @@
+Q:
+  Given an array of words and a length L, format the text such that each line has exactly L characters and is fully (left and right) justified.
+You should pack your words in a greedy approach; that is, pack as many words as you can in each line.
+
+Pad extra spaces ‘ ‘ when necessary so that each line has exactly L characters.
+Extra spaces between words should be distributed as evenly as possible.
+If the number of spaces on a line do not divide evenly between words, the empty slots on the left will be assigned more spaces than the slots on the right.
+For the last line of text, it should be left justified and no extra space is inserted between words.
+
+Your program should return a list of strings, where each string represents a single line.
+
+Example:
+
+words: ["This", "is", "an", "example", "of", "text", "justification."]
+
+L: 16.
+
+Return the formatted lines as:
+
+[
+   "This    is    an",
+   "example  of text",
+   "justification.  "
+]
+
+Ans:
+  int checkNoOfWords(vector<string> &A, int B,int c){
+	int len = 0, i;
+	for(i = c; i < A.size(); i++){
+		len += A[i].size() + 1;
+		if(len - 1  == B)
+			return i;
+		else if(i == A.size() - 1 && len - 1 < B)
+		    return i;
+		else if(len -1 > B)
+		    return i - 1;
+	}
+	return - 1;
+}
+int getLength(vector<string> &A,int a, int b){
+	int len = 0;
+	for(int i = a; i <= b; i++){
+		len += A[i].size();
+	}
+return len;
+}
+vector<string> Solution::fullJustify(vector<string> &A, int B) {
+	vector <string>justified;
+	if(A.size() == 0)
+	    return justified;
+	int i,j,len,ipos = 0,fpos,n,noOfSpaces,extraSpaces,noOfEachSpaces, size;
+	while(true){
+		string space;
+		fpos = checkNoOfWords(A,B,ipos);
+		//cout<<ipos<<" "<<fpos<<endl;
+		len = getLength(A,ipos,fpos);
+		//cout << len << endl;
+		noOfSpaces = B - len;
+		if(fpos != ipos){
+		    noOfEachSpaces = noOfSpaces / (fpos  - ipos);
+		    extraSpaces = noOfSpaces % (fpos  - ipos);
+		}
+		//cout << noOfSpaces << " " << noOfEachSpaces << " " <<  extraSpaces << endl;
+		if(fpos == A.size() - 1 || fpos == -1 || fpos == ipos){
+		    justified.push_back(A[ipos]);
+		    size = justified.size();
+		    //cout << size << endl;
+			for(i = ipos + 1; i <= fpos; i++){
+			    if(noOfSpaces > 0){
+				    justified[size - 1].append(" ");
+				justified[size - 1].append(A[i]);
+				    noOfSpaces --;
+				}
+			}
+			for(i = 0; i < noOfSpaces; i++)
+				justified[size - 1].append(" ");
+
+		}
+		else{
+			for(i = 0; i < noOfEachSpaces; i++)
+				space.push_back(' ');
+				justified.push_back(A[ipos]);
+				size = justified.size();
+			for(i = ipos + 1; i <= fpos; i++){
+				justified[size - 1].append(space);
+				if(extraSpaces > 0){
+					justified[size - 1].append(" ");
+					extraSpaces--;
+				}
+				justified[size - 1].append(A[i]);
+			}
+		}
+		//l++;
+		ipos = fpos + 1;
+		if(fpos == A.size() - 1 || fpos == -1)
+			break;
+	}
+	//cout << justified.size()<<endl;
+	return justified;
+	
+}
+
