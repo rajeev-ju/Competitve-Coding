@@ -1,0 +1,70 @@
+Q :
+  Given two numbers represented as strings, return multiplication of the numbers as a string.
+
+ Note: The numbers can be arbitrarily large and are non-negative.
+Note2: Your answer should not have leading zeroes. For example, 00 is not a valid answer. 
+For example, 
+given strings "12", "10", your answer should be “120”.
+
+NOTE : DO NOT USE BIG INTEGER LIBRARIES ( WHICH ARE AVAILABLE IN JAVA / PYTHON ). 
+
+Soln :
+  string Solution::multiply(string A, string B) {
+     string product;
+    vector<int>arr(1000008,0);
+    int carry = 0, l = 1000007, c = 1000007, i, j,n1,n2,pos,flag = 0,b;
+    if(B.size() > A.size())
+        swap(A,B);
+    for(i = B.size() - 1; i >= 0; i--){
+         n2 = B[i] - '0';
+        c--;
+        for(j = A.size() - 1; j >= 0; j--){
+            n1 = A[j] - '0';
+            if(j == 0){
+                b = (arr[l] + n2* n1 + carry);
+               arr[l] = (arr[l] + n2* n1 + carry);
+               carry = 0;
+            }
+            else{
+                //carry = (arr[l] + n2 * n1 + carry) / 10;
+                b = (arr[l] + n2 * n1 + carry);
+                arr[l] = b % 10;
+                carry = b / 10;
+            }
+            l--;
+        }
+        if(i != 0)
+            l = c;
+    }
+    //cout << l << endl;
+    for(int i = l + 1; i < 1000008; i++){
+        if(arr[i]){
+            pos = i;
+            break;
+        }
+        else
+            flag++;
+    }
+    if(flag == 1000007 - l)
+        product.push_back('0');
+    else{
+        for(int i = pos; i < 1000008; i++){
+            if(i == pos && arr[i] > 9){
+                int temp = arr[i],rev = 0;
+                string str;
+                //cout << temp << endl;
+                while(temp){
+                   str.push_back((rev * 10 + temp % 10) + '0');
+                    temp /= 10;
+                }
+                //cout << rev << endl;
+                for(int j = str.size() - 1 ; j >= 0; j--){
+                    product.push_back(str[j]);
+                }
+            }
+            else
+                product.push_back(arr[i] + '0');
+        }
+    }
+    return product;
+}
