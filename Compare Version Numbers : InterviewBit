@@ -1,0 +1,66 @@
+Q:
+  Compare two version numbers version1 and version2.
+
+If version1 > version2 return 1,
+If version1 < version2 return -1,
+otherwise return 0.
+You may assume that the version strings are non-empty and contain only digits and the . character.
+The . character does not represent a decimal point and is used to separate number sequences.
+For instance, 2.5 is not "two and a half" or "half way to version three", it is the fifth second-level revision of the second first-level revision.
+
+Here is an example of version numbers ordering:
+
+0.1 < 1.1 < 1.2 < 1.13 < 1.13.4
+
+Ans:
+  int Solution::compareVersion(string A, string B) {
+   int i = 0, j = 0, m = 0, n = 0;
+    string temp1,temp2;
+    int len = A.size() >= B.size() ? A.size() : B.size();
+    while(n < len || m < len){
+        //cout << temp1 << endl << temp2;
+        int flag1 = 0,flag2 = 0;
+        for(i = n; A[i] != '.'; i++){
+            if(A[i] != '0' && i < A.size()){
+                temp1.push_back(A[i]);
+                flag1 = 1;
+            }
+            else if(A[i] == '0' && flag1 == 1 && i < A.size())
+                temp1.push_back(A[i]);
+            else if(i == A.size())
+                break;
+        }
+        //cout << temp1 << endl;
+        for(j = m; B[j] != '.'; j++){
+           if(B[j] != '0' && j < B.size()){
+                temp2.push_back(B[j]);
+                flag2 = 1;
+            }
+            else if(B[j] == '0' && flag2 == 1 && j < B.size())
+                temp2.push_back(B[j]);
+            else if(j == B.size()){
+                break;
+            }
+        }
+        //cout << temp2 << endl;
+        if(temp1.size() > temp2.size())
+            return 1;
+        else if(temp1.size() < temp2.size())
+            return -1;
+        else{
+            for(int k = 0; k < temp1.size(); k++){
+                if(temp1[k] > temp2[k])
+                    return 1;
+                else if(temp1[k] < temp2[k])
+                    return -1;
+            }
+        }
+        n += temp1.size() + 1;
+        m += temp2.size() + 1;
+        //cout << temp1 << endl << temp2 << endl;
+        temp1.erase(temp1.begin(),temp1.end());
+        temp2.erase(temp2.begin(),temp2.end());
+    }
+    return 0;
+
+}
